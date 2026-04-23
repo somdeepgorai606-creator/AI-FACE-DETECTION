@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTV AI Security Hub</title>
+    <meta name="description" content="AI powered unauthorized person detection">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="dashboard-header">
+            <div class="logo">
+                <div class="pulsing-dot"></div>
+                <div class="title-group">
+                    <h1>CCTV AI Security Hub</h1>
+                    <p class="team-name" style="font-size: 0.75rem; font-weight: 600; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-top: -2px;">by DARK</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <span class="icon-moon">🌙</span>
+                    <span class="icon-sun">☀️</span>
+                </button>
+                <button id="control-btn" class="control-btn btn-start" onclick="toggleDetection()" aria-label="Start or stop detection">
+                    ▶ Start Detection
+                </button>
+                <button id="sos-btn" class="control-btn btn-sos" onclick="triggerSOS(true)" aria-label="Trigger manual SOS">
+                    🚨 SOS
+                </button>
+                <button id="mute-btn" class="mute-btn btn-unmuted" onclick="toggleMute()" aria-label="Mute or unmute alarm">
+                    🔊 Alarm On
+                </button>
+                <div class="status-indicator" id="status-badge">
+                    <span class="status-icon">⏳</span>
+                    <span id="status-text">Initializing Models...</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="camera-wrapper glass-panel">
+
+                <!-- Controls Bar -->
+                <div class="camera-controls-bar">
+                    <div class="camera-ctrl-group">
+                        <label for="camera-select">📷 Camera</label>
+                        <select id="camera-select" class="cam-select"></select>
+                    </div>
+                    <div class="camera-ctrl-group intruder-badge-group">
+                        <span class="intruder-badge-label">🚨 Intruders</span>
+                        <span id="intruder-count" class="intruder-count-badge">0</span>
+                    </div>
+                </div>
+
+                <div class="camera-lens">
+                    <video id="video" autoplay muted></video>
+                    <canvas id="canvas"></canvas>
+                    <div class="scanline"></div>
+                </div>
+            </div>
+            
+            <aside class="sidebar glass-panel">
+                <div class="threat-feed">
+                    <h3>⚡ System Log</h3>
+                    <ul id="log-list">
+                        <li>System online. Awaiting camera feed...</li>
+                    </ul>
+                </div>
+            </aside>
+        </main>
+
+    </div>
+
+    <!-- Scripts -->
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <script defer src="script.js"></script>
+</body>
+</html>

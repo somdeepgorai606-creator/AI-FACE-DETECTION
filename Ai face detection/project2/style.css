@@ -1,0 +1,500 @@
+:root {
+    --bg-dark: #07090f;
+    --accent: #00f0ff;
+    --accent-glow: rgba(0, 240, 255, 0.4);
+    --alert: #ff2a55;
+    --alert-glow: rgba(255, 42, 85, 0.4);
+    --glass: rgba(16, 20, 32, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glass-shadow: rgba(0, 0, 0, 0.4);
+    --text-main: #f0f4f8;
+    --text-muted: #8e9bb0;
+    --bg-gradient-1: rgba(0, 240, 255, 0.05);
+    --bg-gradient-2: rgba(255, 42, 85, 0.05);
+}
+
+[data-theme="light"] {
+    --bg-dark: #f0f4f8;
+    --accent: #0ea5e9;
+    --accent-glow: rgba(14, 165, 233, 0.4);
+    --alert: #e11d48;
+    --alert-glow: rgba(225, 29, 72, 0.4);
+    --glass: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --bg-gradient-1: rgba(14, 165, 233, 0.05);
+    --bg-gradient-2: rgba(225, 29, 72, 0.05);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-image: 
+        radial-gradient(circle at top right, var(--bg-gradient-1) 0%, transparent 40%),
+        radial-gradient(circle at bottom left, var(--bg-gradient-2) 0%, transparent 40%);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.app-container {
+    width: 95%;
+    max-width: 1400px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(128, 128, 128, 0.2);
+    transform: scale(1.1);
+}
+
+.theme-toggle .icon-sun { display: none; }
+[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .theme-toggle .icon-sun { display: inline-block; }
+
+.control-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.control-btn.btn-start {
+    background: linear-gradient(135deg, #00c47a, #00f0b4);
+    color: #07090f;
+    box-shadow: 0 4px 15px rgba(0, 196, 122, 0.35);
+}
+
+.control-btn.btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 196, 122, 0.5);
+}
+
+.control-btn.btn-stop {
+    background: linear-gradient(135deg, #ff2a55, #ff6b35);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 42, 85, 0.35);
+}
+
+.control-btn.btn-stop:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 42, 85, 0.5);
+}
+
+.control-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* --- Mute Button --- */
+.mute-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.mute-btn.btn-unmuted {
+    background: rgba(0, 240, 255, 0.12);
+    color: var(--accent);
+    border: 1px solid var(--accent-glow);
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.1);
+}
+
+.mute-btn.btn-unmuted:hover {
+    background: rgba(0, 240, 255, 0.22);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 240, 255, 0.2);
+}
+
+.mute-btn.btn-muted {
+    background: rgba(100, 100, 120, 0.18);
+    color: var(--text-muted);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+    text-decoration: line-through;
+    opacity: 0.75;
+}
+
+.mute-btn.btn-muted:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    background: rgba(100, 100, 120, 0.28);
+}
+
+/* --- SOS Button --- */
+.control-btn.btn-sos {
+    background: linear-gradient(135deg, #ff0f43, #d90429);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 15, 67, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.control-btn.btn-sos:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 15, 67, 0.6);
+}
+
+.control-btn.btn-sos.active {
+    animation: sosPulse 1.5s infinite;
+    background: linear-gradient(135deg, #d90429, #8d021f);
+}
+
+@keyframes sosPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 15, 67, 0.7);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(255, 15, 67, 0);
+        transform: scale(1.05);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 15, 67, 0);
+        transform: scale(1);
+    }
+}
+/* ------------------- */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px var(--glass-shadow);
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo h1 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #fff, #a0aec0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.pulsing-dot {
+    width: 12px;
+    height: 12px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-glow);
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.9); box-shadow: 0 0 0 0 var(--accent-glow); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 12px rgba(0, 240, 255, 0); }
+    100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.status-indicator.ready { color: var(--accent); border: 1px solid var(--accent-glow); }
+.status-indicator.alert { color: var(--alert); border: 1px solid var(--alert-glow); animation: flash 1s infinite alternate; }
+
+@keyframes flash {
+    0% { background: rgba(255, 42, 85, 0.1); }
+    100% { background: rgba(255, 42, 85, 0.3); }
+}
+
+.dashboard-content {
+    display: flex;
+    gap: 1.5rem;
+    flex: 1;
+    min-height: 0;
+}
+
+.glass-panel {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px var(--glass-shadow);
+    overflow: hidden;
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.camera-wrapper {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+    padding: 1rem;
+}
+
+/* --- Camera Controls Bar --- */
+.camera-controls-bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.6rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.camera-ctrl-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.camera-ctrl-group label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cam-select {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--accent-glow);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    max-width: 180px;
+    transition: border-color 0.2s;
+}
+
+.cam-select:hover { border-color: var(--accent); }
+.cam-select option { background: #0f1320; color: #fff; }
+
+/* Intruder Count Badge */
+.intruder-badge-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+    margin-left: auto;
+}
+
+.intruder-badge-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--alert);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.intruder-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 0.5rem;
+    background: rgba(255, 42, 85, 0.15);
+    border: 2px solid var(--alert-glow);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--alert);
+    font-family: 'Outfit', sans-serif;
+    box-shadow: 0 0 10px rgba(255, 42, 85, 0.15);
+    transition: all 0.3s ease;
+}
+/* --------------------------- */
+
+.camera-lens {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+}
+
+video, canvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Subtle scanning effect across the video */
+.scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-glow);
+    opacity: 0.5;
+    animation: scan 4s linear infinite;
+    z-index: 10;
+    pointer-events: none;
+}
+
+@keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(800px); }
+}
+
+.sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.threat-feed h3 {
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#log-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    overflow-y: auto;
+    max-height: 100%;
+    padding-right: 0.5rem;
+}
+
+#log-list::-webkit-scrollbar { width: 4px; }
+#log-list::-webkit-scrollbar-track { background: transparent; }
+#log-list::-webkit-scrollbar-thumb { background: var(--accent-glow); border-radius: 4px; }
+
+#log-list li {
+    font-size: 0.85rem;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.8rem 1rem;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    transition: all 0.3s ease;
+    animation: slideIn 0.3s ease-out forwards;
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+#log-list li.alert-log {
+    border-left-color: var(--alert);
+    color: #ffb3c1;
+    background: rgba(255, 42, 85, 0.1);
+}
+
+.alert-image {
+    display: block;
+    width: 100%;
+    margin-top: 0.8rem;
+    border-radius: 6px;
+    border: 1px solid var(--alert-glow);
+    box-shadow: 0 4px 12px rgba(255, 42, 85, 0.2);
+}
+
+@keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- Screen Alert Blink Effect --- */
+body.screen-alert::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--alert);
+    pointer-events: none;
+    z-index: 9999;
+    animation: screenAlertBlink 0.6s infinite alternate;
+}
+
+@keyframes screenAlertBlink {
+    0% { opacity: 0; }
+    100% { opacity: 0.25; }
+}
